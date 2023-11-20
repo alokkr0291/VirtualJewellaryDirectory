@@ -1,4 +1,4 @@
-flask
-opencv-python
-dlib
-face Recognition
+pip install Flask
+pip install opencv-contrib-python
+pip install dlib
+pip install face-recognition
