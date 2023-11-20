@@ -8,13 +8,13 @@ SKIP_FRAMES = 2
 winName = "VitrualNeckless"
 
 def init():
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture(-1)
     return camera
 
 
 def PlaceObject(imgName):
 
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture(-1)
     jewel_img = cv2.imread("Images/"+imgName)
     if (camera.isOpened is False):
         print("Unable to open Camera")
