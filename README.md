@@ -1,28 +1,23 @@
-# Live-Streaming-using-OpenCV-Flask
-A Flask Web-App to stream live from local webcam or CCTV (rtsp link)
+# webcam-streaming
+<img src="0001.jpg"/>
 
-## Use Built-in Webcam of Laptop
+<h1>Requirements</h1>
+<code>pip install streamlit-webrtc</code><br>
+<code>pip install streamlit</code><br>
+<code>pip install opencv-python</code><br>
+<code>pip install numpy</code><br>
 
-### Put Zero (O) in cv2.VideoCapture(0)
-
-``` cv2.VideoCapture(0) ```
-
-### Use Ip Camera/CCTV/RTSP Link
-``` cv2.VideoCapture('rtsp://username:password@camera_ip_address:554/user=username_password='password'_channel=channel_number_stream=0.sdp')  ```
-
-### Example RTSP Link
-``` cv2.VideoCapture('rtsp://mamun:123456@101.134.16.117:554/user=mamun_password=123456_channel=0_stream=0.sdp') ```
-
-### Change Channel Number to Change the Camera
-``` cv2.VideoCapture('rtsp://mamun:123456@101.134.16.117:554/user=mamun_password=123456_channel=1_stream=0.sdp') ```
-
-### Display the resulting frame in browser
-``` cv2.imencode('.jpg', frame)[1].tobytes() ```
-
-### Or this one
-```
-net , buffer = cv2.imencode('.jpg', frame)
-buffer.tobytes()              
-```
-
-### [Reference](https://blog.miguelgrinberg.com/post/video-streaming-with-flask)
+<h1>How to Run?</h1>
+run it with following command <br> <code>streamlit run app.py</code>
+  <h1>Video</h1>
+  video link : https://youtu.be/VbbDzx3jCoE<br>
+  
+<h1>Connect with me</h1>
+If you have any queries regarding any of the topic I discussed in this video feel free to talk to e using below links:<br>
+facebook : https://m.facebook.com/proogramminghub<br>
+instagram : @programming_hut<br>
+twitter : https://twitter.com/programming_hut<br>
+github : https://github.com/Pawandeep-prog<br>
+discord : https://discord.gg/G5Cunyg<br>
+linkedin : https://www.linkedin.com/in/programminghut<br>
+youtube : https://www.youtube.com/c/programminghutofficial<br>

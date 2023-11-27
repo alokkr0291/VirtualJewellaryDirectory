@@ -1,36 +1,22 @@
-from flask import Flask, render_template, Response
+from streamlit_webrtc import webrtc_streamer, RTCConfiguration
+import av
 import cv2
 
-app = Flask(__name__)
+cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
-camera = cv2.VideoCapture(0)  # use 0 for web camera
-#  for cctv camera use rtsp://username:password@ip_address:554/user=username_password='password'_channel=channel_number_stream=0.sdp' instead of camera
-# for local webcam use cv2.VideoCapture(0)
+class VideoProcessor:
+	def recv(self, frame):
+		frm = frame.to_ndarray(format="bgr24")
 
-def gen_frames():  # generate frame by frame from camera
-    while True:
-        # Capture frame-by-frame
-        success, frame = camera.read()  # read the camera frame
-        if not success:
-            break
-        else:
-            ret, buffer = cv2.imencode('.jpg', frame)
-            frame = buffer.tobytes()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+		faces = cascade.detectMultiScale(cv2.cvtColor(frm, cv2.COLOR_BGR2GRAY), 1.1, 3)
 
+		for x,y,w,h in faces:
+			cv2.rectangle(frm, (x,y), (x+w, y+h), (0,255,0), 3)
 
-@app.route('/video_feed')
-def video_feed():
-    #Video streaming route. Put this in the src attribute of an img tag
-    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+		return av.VideoFrame.from_ndarray(frm, format='bgr24')
 
-
-@app.route('/')
-def index():
-    """Video streaming home page."""
-    return render_template('index.html')
-
-
-if __name__ == '__main__':
-    app.run('0.0.0.0',port=5000,debug=True)
+webrtc_streamer(key="key", video_processor_factory=VideoProcessor,
+				rtc_configuration=RTCConfiguration(
+					{"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
+					)
+	)
